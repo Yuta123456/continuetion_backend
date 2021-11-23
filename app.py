@@ -11,6 +11,7 @@ from linebot.models import (
 )
 
 import os
+import json
 
 app = Flask(__name__)
 

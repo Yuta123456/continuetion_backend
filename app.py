@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 )
 
 import os
@@ -47,16 +47,19 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = ""
+    message = None
     if (event.message.text == "Yes"):
-        message = "Good job."
+        message = TextSendMessage(text="Good job.")
     elif (event.message.text == "record"):
-        message = question
+        message = FlexSendMessage(
+            alt_text='hello',
+            contents=question
+        )
     elif (event.message.text == "No"):
-        message = "Fight"
+        message = TextSendMessage(text="Fight")
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=message))
+        message)
 
 
 if __name__ == "__main__":

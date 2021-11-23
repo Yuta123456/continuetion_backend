@@ -10,6 +10,8 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 
+import os
+
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(
@@ -17,7 +19,7 @@ line_bot_api = LineBotApi(
 handler = WebhookHandler('ade5c3146d69ae281a7175d9fa9e1a61')
 
 
-@app.route("/", method=['GET'])
+@app.route("/", methods=['GET'])
 def test():
     return 'test'
 
@@ -54,6 +56,7 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
+    #
     app.run()
 #     {
 #   "access_token": "drC5T2zPKOG3fIpuHll2QyCIhUDumnQY2m6EHwbICfn259sg9zRrdIbQa+eAm+gN3oo/trEkzAi47pLDuikgDZlwhX+5PSiZo/XuNMBC24wcm3WeKj32YIrWVAbK+czzgSnhc+FkL/NulMVAq7Eu1Y9PbdgDzCFqoOLOYbqAITQ=",

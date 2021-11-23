@@ -26,7 +26,15 @@ def test():
 
 
 @app.route("/", methods=['POST'])
-def test2():
+def test2(event):
+    message = ""
+    if (event.message.text == "Yes"):
+        message = "Good job."
+    else:
+        message = "Fight!"
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=message))
     return Response(response=json.dumps({'message': 'hello response'}), status=200)
 
 

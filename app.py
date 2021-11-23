@@ -1,4 +1,4 @@
-from flask import Flask, request, abort
+from flask import Flask, request, abort, Response
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -22,6 +22,11 @@ handler = WebhookHandler('ade5c3146d69ae281a7175d9fa9e1a61')
 @app.route("/", methods=['GET'])
 def test():
     return 'test'
+
+
+@app.route("/", methods=['POST'])
+def test2():
+    return Response(response=json.dumps({'message': 'hello response'}), status=200)
 
 
 @app.route("/callback", methods=['POST'])

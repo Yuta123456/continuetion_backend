@@ -1,4 +1,4 @@
-message = {
+question = {
     "type": "carousel",
     "contents": [
         {
@@ -48,7 +48,7 @@ message = {
             },
             "styles": {
                 "footer": {
-                    "separator": false
+                    "separator": False
                 }
             }
         },
@@ -85,7 +85,7 @@ message = {
                               "type": "text",
                               "text": "明日は頑張ります！",
                               "size": "sm",
-                              "wrap": true
+                              "wrap": True
                           }
                         ],
                         "flex": 1
@@ -101,7 +101,7 @@ message = {
             },
             "styles": {
                 "footer": {
-                    "separator": false
+                    "separator": False
                 }
             }
         }

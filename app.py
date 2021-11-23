@@ -12,7 +12,7 @@ from linebot.models import (
 
 import os
 import json
-import messages
+from messages.question import question
 
 app = Flask(__name__)
 
@@ -51,7 +51,7 @@ def handle_message(event):
     if (event.message.text == "Yes"):
         message = "Good job."
     elif (event.message.text == "record"):
-        message = messages.message
+        message = question
     elif (event.message.text == "No"):
         message = "Fight"
     line_bot_api.reply_message(

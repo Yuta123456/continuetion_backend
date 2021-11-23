@@ -12,6 +12,7 @@ from linebot.models import (
 
 import os
 import json
+import messages
 
 app = Flask(__name__)
 
@@ -23,19 +24,6 @@ handler = WebhookHandler('ade5c3146d69ae281a7175d9fa9e1a61')
 @app.route("/", methods=['GET'])
 def test():
     return 'test'
-
-
-@app.route("/", methods=['POST'])
-def test2(event):
-    message = ""
-    if (event.message.text == "Yes"):
-        message = "Good job."
-    else:
-        message = "Fight!"
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=message))
-    return Response(response=json.dumps({'message': 'hello response'}), status=200)
 
 
 @app.route("/callback", methods=['POST'])
@@ -62,18 +50,14 @@ def handle_message(event):
     message = ""
     if (event.message.text == "Yes"):
         message = "Good job."
-    else:
-        message = "Fight!"
+    elif (event.message.text == "record"):
+        message = messages.message
+    elif (event.message.text == "No"):
+        message = "Fight"
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=message))
 
 
 if __name__ == "__main__":
-    #
     app.run()
-#     {
-#   "access_token": "drC5T2zPKOG3fIpuHll2QyCIhUDumnQY2m6EHwbICfn259sg9zRrdIbQa+eAm+gN3oo/trEkzAi47pLDuikgDZlwhX+5PSiZo/XuNMBC24wcm3WeKj32YIrWVAbK+czzgSnhc+FkL/NulMVAq7Eu1Y9PbdgDzCFqoOLOYbqAITQ=",
-#   "expires_in": 2592000,
-#   "token_type": "Bearer"
-# }

@@ -39,6 +39,11 @@
                 "spacing": "md",
                 "paddingAll": "12px"
             },
+            "action": {
+                "type": "message",
+                "label": "action",
+                "text": "Yes"
+            },
             "styles": {
                 "footer": {
                     "separator": false
@@ -85,6 +90,11 @@
                 }],
                 "spacing": "md",
                 "paddingAll": "12px"
+            },
+            "action": {
+                "type": "message",
+                "label": "action",
+                "text": "No"
             },
             "styles": {
                 "footer": {

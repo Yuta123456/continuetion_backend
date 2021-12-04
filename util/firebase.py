@@ -23,7 +23,10 @@ def show_data(userId):
     user_continuetion = users_ref.order_by_key().get()
     string = "直近一週間の結果"
     for key, val in user_continuetion.items():
-        string += "\n{0} : {1}".format(key, "🔴" if val else "🔵")
+        year = key[:4]
+        month = key[4:6]
+        day = key[6:]
+        string += "\n{0}年{1}月{2}日 : {3}".format(year, month, day, "✅" if val else "❌")
     return string
 
 

@@ -10,11 +10,10 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 )
 
-import os
-import json
 import datetime
 from messages.question import question
 from util.firebase import post_data, show_data
+from util.message import get_fruits, get_no_reply_message
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(
@@ -55,6 +54,7 @@ def handle_message(event):
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=DIFF_JST_FROM_UTC)
     today = now.strftime('%Y%m%d')
     if (event.message.text == "Yes"):
+        # 既に今日入力しているかどうか判定する
         if post_data(userId, today):
             message = TextSendMessage(text="すごい！偉いね✨")
         else:
@@ -68,8 +68,10 @@ def handle_message(event):
         message = TextSendMessage(text="🏳‍🌈明日は頑張ろう🏳‍🌈")
     elif (event.message.text == "Show"):
         message = TextSendMessage(text=show_data(userId))
+    elif (event.message.text == "Fruits"):
+        message = TextSendMessage(text=get_fruits())
     else:
-        message = TextSendMessage(text="そのメッセージは反応できないよ")
+        message = TextSendMessage(text=get_no_reply_message())
     line_bot_api.reply_message(
         event.reply_token,
         message)

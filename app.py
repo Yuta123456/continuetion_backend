@@ -49,10 +49,11 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = None
-    userId = event.source.user_id()
+    userId = event.source.sender_id
     time = datetime.datetime.now()
     if (event.message.text == "Yes"):
         message = TextSendMessage(text="Good job.")
+        print(event.source)
         post_data(userId, time)
     elif (event.message.text == "record"):
         message = FlexSendMessage(

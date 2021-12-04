@@ -52,6 +52,7 @@ def handle_message(event):
     userId = event.source.sender_id
     today = datetime.date.today()
     today = today.strftime('%Y%m%d')
+    print(today)
     if (event.message.text == "Yes"):
         if post_data(userId, today):
             message = TextSendMessage(text="すごい！偉いね✨")

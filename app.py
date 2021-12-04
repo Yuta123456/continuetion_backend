@@ -12,8 +12,9 @@ from linebot.models import (
 
 import os
 import json
+import datetime
 from messages.question import question
-
+from util.firebase import post_data
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(
@@ -48,8 +49,11 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = None
+    userId = event['source']['userId']
+    time = datetime.datetime.now()
     if (event.message.text == "Yes"):
         message = TextSendMessage(text="Good job.")
+        post_data(userId, time)
     elif (event.message.text == "record"):
         message = FlexSendMessage(
             alt_text='hello',

@@ -1,0 +1,6 @@
+- questionのアクションをURIに変更し、このAPIにポストするように変更。
+https://developers.line.biz/ja/docs/messaging-api/using-flex-message-simulator/#add-button
+- firebaseのユーザと、LINEのユーザの紐づけ方法を検討。
+- helpコマンドを作成
+- フロントの見た目を作成
+- 一日に一回しか送信できないように

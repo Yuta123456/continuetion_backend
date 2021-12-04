@@ -50,10 +50,10 @@ def callback():
 def handle_message(event):
     message = None
     userId = event.source.sender_id
-    today = datetime.date.today()
-    print(today)
-    today = today.strftime('%Y%m%d')
-    print(today)
+    # JSTとUTCの差分
+    DIFF_JST_FROM_UTC = 9
+    now = datetime.datetime.utcnow() + datetime.timedelta(hours=DIFF_JST_FROM_UTC)
+    today = now.strftime('%Y%m%d')
     if (event.message.text == "Yes"):
         if post_data(userId, today):
             message = TextSendMessage(text="すごい！偉いね✨")

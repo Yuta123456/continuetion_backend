@@ -20,7 +20,7 @@ def post_data(userId, day):
 
 def show_data(userId):
     users_ref = db.reference('/users').child(userId).child('continuetion')
-    user_continuetion = users_ref.order_by_key()
+    user_continuetion = users_ref.order_by_key().get()
     string = "直近一週間の結果\n"
     for key, val in user_continuetion.items():
         string += "{0} : {1}\n".format(key, "🔴" if val else "🔵")

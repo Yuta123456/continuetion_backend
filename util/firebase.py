@@ -42,7 +42,7 @@ if not os.path.exists(json_path):
         "client_x509_cert_url": os.environ['client_x509_cert_url']
     }
     with open(json_path, 'w') as f:
-        json.dump(config)
+        json.dump(config, f)
 cred = credentials.Certificate(json_path)
 
 firebase_admin.initialize_app(cred, {

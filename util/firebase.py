@@ -21,9 +21,9 @@ def post_data(userId, day):
 def show_data(userId):
     users_ref = db.reference('/users').child(userId).child('continuetion')
     user_continuetion = users_ref.order_by_key().get()
-    string = "直近一週間の結果\n"
+    string = "直近一週間の結果"
     for key, val in user_continuetion.items():
-        string += "{0} : {1}\n".format(key, "🔴" if val else "🔵")
+        string += "\n{0} : {1}".format(key, "🔴" if val else "🔵")
     return string
 
 
@@ -45,7 +45,6 @@ if not os.path.exists(json_path):
         json.dump(config, f)
 with open(json_path, 'r') as f:
     data = json.load(f)
-print(data)
 cred = credentials.Certificate(json_path)
 
 firebase_admin.initialize_app(cred, {

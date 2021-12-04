@@ -14,7 +14,7 @@ import os
 import json
 import datetime
 from messages.question import question
-from util.firebase import post_data
+from util.firebase import post_data, show_data
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(
@@ -50,18 +50,24 @@ def callback():
 def handle_message(event):
     message = None
     userId = event.source.sender_id
-    time = datetime.datetime.now()
+    today = datetime.date.today()
+    today = today.strftime('%Y%m%d')
     if (event.message.text == "Yes"):
-        message = TextSendMessage(text="Good job.")
-        print(event.source)
-        post_data(userId, time)
-    elif (event.message.text == "record"):
+        if post_data(userId, today):
+            message = TextSendMessage(text="すごい！偉いね✨")
+        else:
+            message = TextSendMessage(text="今日は入力終えてますよ！")
+    elif (event.message.text == "Record"):
         message = FlexSendMessage(
             alt_text='hello',
             contents=question
         )
     elif (event.message.text == "No"):
-        message = TextSendMessage(text="Fight")
+        message = TextSendMessage(text="🏳‍🌈明日は頑張ろう🏳‍🌈")
+    elif (event.message.text == "Show"):
+        message = TextSendMessage(text=show_data(userId))
+    else:
+        message = TextSendMessage(text="そのメッセージは反応できないよ")
     line_bot_api.reply_message(
         event.reply_token,
         message)

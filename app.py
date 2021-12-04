@@ -49,7 +49,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = None
-    userId = event['source']['userId']
+    userId = event.source.user_id()
     time = datetime.datetime.now()
     if (event.message.text == "Yes"):
         message = TextSendMessage(text="Good job.")

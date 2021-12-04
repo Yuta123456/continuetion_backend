@@ -43,6 +43,9 @@ if not os.path.exists(json_path):
     }
     with open(json_path, 'w') as f:
         json.dump(config, f)
+with open(json_path, 'r') as f:
+    data = json.load(f)
+print(data)
 cred = credentials.Certificate(json_path)
 
 firebase_admin.initialize_app(cred, {

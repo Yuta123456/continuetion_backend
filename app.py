@@ -58,7 +58,7 @@ def handle_message(event):
         if post_data(userId, today):
             message = TextSendMessage(text="すごい！偉いね✨")
         else:
-            message = TextSendMessage(text="今日は入力終えてますよ！")
+            message = TextSendMessage(text="今日の入力は終了しています！")
     elif (event.message.text == "Record"):
         message = FlexSendMessage(
             alt_text='hello',

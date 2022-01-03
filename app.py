@@ -14,11 +14,12 @@ import datetime
 from messages.question import question
 from util.firebase import post_data, show_data
 from util.message import get_fruits, get_no_reply_message
+from constants.LINE_BOT import LINE_BOT_CHANNEL_SECRET, LINE_BOT_CHANNEL_TOKEN
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(
-    'drC5T2zPKOG3fIpuHll2QyCIhUDumnQY2m6EHwbICfn259sg9zRrdIbQa+eAm+gN3oo/trEkzAi47pLDuikgDZlwhX+5PSiZo/XuNMBC24wcm3WeKj32YIrWVAbK+czzgSnhc+FkL/NulMVAq7Eu1Y9PbdgDzCFqoOLOYbqAITQ=')
-handler = WebhookHandler('ade5c3146d69ae281a7175d9fa9e1a61')
+    LINE_BOT_CHANNEL_TOKEN)
+handler = WebhookHandler(LINE_BOT_CHANNEL_SECRET)
 
 
 @app.route("/", methods=['GET'])

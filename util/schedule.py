@@ -7,12 +7,13 @@ from linebot.models import (
 )
 import os
 import sys
+from constants.LINE_BOT import LINE_BOT_CHANNEL_TOKEN
 sys.path.append(os.getcwd())
 
 from messages.question import question
 
 line_bot_api = LineBotApi(
-    'drC5T2zPKOG3fIpuHll2QyCIhUDumnQY2m6EHwbICfn259sg9zRrdIbQa+eAm+gN3oo/trEkzAi47pLDuikgDZlwhX+5PSiZo/XuNMBC24wcm3WeKj32YIrWVAbK+czzgSnhc+FkL/NulMVAq7Eu1Y9PbdgDzCFqoOLOYbqAITQ=')
+    LINE_BOT_CHANNEL_TOKEN)
 
 message = FlexSendMessage(
     alt_text='今日はいかがでしたか？',

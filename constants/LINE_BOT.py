@@ -8,3 +8,4 @@ if os.path.exists(line_key_path):
 else:
     LINE_BOT_CHANNEL_SECRET = os.environ['LINE_BOT_CHANNEL_SECRET']
     LINE_BOT_CHANNEL_TOKEN  = os.environ['LINE_BOT_CHANNEL_TOKEN']
+

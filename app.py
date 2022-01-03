@@ -34,11 +34,10 @@ def callback():
 
     # get request body as text
     body = request.get_data(as_text=True)
-    print(body)
+
     app.logger.info("Request body: " + body)
 
     # handle webhook body
-    handler.handle(body, signature)
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:

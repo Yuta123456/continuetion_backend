@@ -29,7 +29,28 @@ def show_data(userId):
         string += "\n{0}年{1}月{2}日 : {3}".format(year, month, day, "✅" if val else "❌")
     return string
 
+def save_LINE_user_id_and_x_site_code(userId, prevent_X_site_request_forgery_code):
+    access_info_ref = db.reference('/access_info').child("x_site_code_to_firebase_id")
+    
+    firebase_id = access_info_ref.child(prevent_X_site_request_forgery_code).get()
+    if not firebase_id:
+        # エラーを投げるようにした方が良い。
+        return False
+    
+    access_info_ref = db.reference('/access_info').child("firebase_id_to_line_id")
+    
+    access_info_ref.update({
+        firebase_id:userId
+    })
+    return True
 
+def is_exists_x_site_code(prevent_X_site_request_forgery_code):
+    access_info_ref = db.reference('/access_info').child("x_site_code_to_firebase_id")
+    if access_info_ref.child(prevent_X_site_request_forgery_code).get():
+        return True
+    else:
+        return False
+    
 json_path = './util/seckey.json'
 if not os.path.exists(json_path):
     config = {

@@ -12,7 +12,7 @@ from linebot.models import (
 import requests
 import datetime
 from messages.question import question
-from util.firebase import is_exists_x_site_code, post_data, save_LINE_user_id_and_x_site_code, show_data
+from util.firebase import exist_today_data, is_exists_x_site_code, post_data, post_firebase, save_LINE_user_id_and_x_site_code, show_data
 from util.message import get_fruits, get_no_reply_message
 from constants.LINE_BOT import LINE_BOT_CHANNEL_SECRET, LINE_BOT_CHANNEL_TOKEN
 app = Flask(__name__)
@@ -57,8 +57,10 @@ def handle_message(event):
     today = now.strftime('%Y%m%d')
     if (event.message.text == "Yes"):
         # 既に今日入力しているかどうか判定する
-        if post_data(userId, today):
+        if not exist_today_data(userId, today):
             message = TextSendMessage(text="すごい！偉いね✨")
+            post_firebase(userId, today)
+            post_pixela(userId, today)
         else:
             message = TextSendMessage(text="今日の入力は終了しています！")
     elif (event.message.text == "Record"):

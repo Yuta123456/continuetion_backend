@@ -7,15 +7,21 @@ from firebase_admin import credentials
 import os
 
 
-def post_data(userId, day):
+def exist_today_data(userId, day):
     users_ref = db.reference('/users').child(userId).child('continuetion')
     print(users_ref.child(day).get())
     if users_ref.child(day).get():
+        return True
+    else:
         return False
+
+
+def post_firebase(userId, day):
+    users_ref = db.reference('/users').child(userId).child('continuetion')
     users_ref.update({
         day: True
     })
-    return True
+    # TODO: pixelaへの投稿も必要。
 
 
 def show_data(userId):

@@ -12,7 +12,7 @@ from linebot.models import (
 import requests
 import datetime
 from messages.question import question
-from util.firebase import exist_today_data, is_exists_x_site_code, post_data, post_firebase, save_LINE_user_id_and_x_site_code, show_data
+from util.firebase import exist_today_data, post_firebase, show_data
 from util.message import get_fruits, get_no_reply_message
 from constants.LINE_BOT import LINE_BOT_CHANNEL_SECRET, LINE_BOT_CHANNEL_TOKEN
 app = Flask(__name__)

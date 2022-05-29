@@ -1,3 +1,4 @@
+from datetime import datetime, date, timedelta
 import json
 import re
 import firebase_admin
@@ -10,7 +11,6 @@ from util.message import get_restart_send_message, get_stop_send_message
 
 def exist_today_data(userId, day):
     users_ref = db.reference('/users').child(userId).child('continuetion')
-    print(users_ref.child(day).get())
     if users_ref.child(day).get():
         return True
     else:
@@ -25,15 +25,19 @@ def post_firebase(userId, day):
 
 
 def show_data(userId):
-    users_ref = db.reference('/users').child(userId).child('continuetion')
-    user_continuetion = users_ref.order_by_key().get()
-    string = "直近一週間の結果"
-    for key, val in user_continuetion.items():
-        year = key[:4]
-        month = key[4:6]
-        day = key[6:]
-        string += "\n{0}年{1}月{2}日 : {3}".format(year, month, day, "✅" if val else "❌")
-    return string
+    message = "直近一週間の結果\n"
+    today = datetime.today()
+    last_week = [today - timedelta(days=i) for i in range(7)]
+    for day in last_week:
+        format_day = datetime.strftime(day, '%Y-%m-%d')
+        key = datetime.strftime(day, '%Y%m%d')
+        message += format_day + ":"
+        if exist_today_data(userId, key):
+            message += "✅"
+        else:
+            message += "❌"
+        message += "\n"
+    return message
 
 def set_continuation_contents(userId, message): 
     # format set:{}

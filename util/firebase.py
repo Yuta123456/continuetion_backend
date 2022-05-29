@@ -53,5 +53,8 @@ with open(json_path, 'r') as f:
 cred = credentials.Certificate(json_path)
 
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://continuation-5e078-default-rtdb.firebaseio.com/'
+    'databaseURL': 'https://continuation-5e078-default-rtdb.firebaseio.com/',
+    'databaseAuthVariableOverride': {
+        'uid': 'my-service-worker'
+    }
 })

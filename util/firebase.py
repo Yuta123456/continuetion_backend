@@ -44,6 +44,12 @@ def set_continuation_contents(userId, message):
     })
     return contents
 
+def get_continuation_contents(userId):
+    users_ref = db.reference('/users').child(userId)
+    contents = users_ref.child("contents").get()
+    return contents
+
+
 def stop_send_message(userId):
     users_ref = db.reference('/users').child(userId)
     users_ref.update({
@@ -70,6 +76,10 @@ def is_can_send_message_for_user(user_id):
     else:
         return False
 
+
+def get_ids_of_all_line_user():
+    users_ids = db.reference('/users').get()
+    return list(users_ids)
 
 
 json_path = './util/seckey.json'

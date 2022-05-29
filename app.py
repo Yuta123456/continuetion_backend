@@ -14,8 +14,11 @@ from messages.question import question
 from util.firebase import exist_today_data, get_user_data, post_firebase, restart_send_message, set_continuation_contents, show_data, stop_send_message
 from util.message import get_fruits, get_no_reply_message, get_set_complete_message
 from constants.LINE_BOT import LINE_BOT_CHANNEL_SECRET, LINE_BOT_CHANNEL_TOKEN
-app = Flask(__name__)
+from flask_cors import CORS
 
+app = Flask(__name__)
+# 本番環境を追加
+CORS(app, origins=["https://example.com", "http://localhost:8100"])
 line_bot_api = LineBotApi(
     LINE_BOT_CHANNEL_TOKEN)
 handler = WebhookHandler(LINE_BOT_CHANNEL_SECRET)

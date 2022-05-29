@@ -1,2 +1,3 @@
 /util/seckey.json
 /constants/seckey.txt
+__pycache__/

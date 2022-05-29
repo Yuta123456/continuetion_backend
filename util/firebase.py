@@ -5,6 +5,10 @@ from firebase_admin import db
 from firebase_admin import credentials
 import os
 
+from sqlalchemy import false
+
+from util.message import get_restart_send_message, get_stop_send_message
+
 
 def exist_today_data(userId, day):
     users_ref = db.reference('/users').child(userId).child('continuetion')
@@ -43,13 +47,31 @@ def set_continuation_contents(userId, message):
     return contents
 
 def stop_send_message(userId):
-    message = "hey"
+    users_ref = db.reference('/users').child(userId)
+    users_ref.update({
+        "isCanSendMessage": False
+    })
+    message = get_stop_send_message()
     return message
 
 
 def restart_send_message(userId):
-    message = "hey"
+    users_ref = db.reference('/users').child(userId)
+    users_ref.update({
+        "isCanSendMessage": True
+    })
+    message = get_restart_send_message()
     return message
+
+def is_can_send_message_for_user(user_id):
+    users_ref = db.reference('/users').child(user_id)
+    is_can_send_message = users_ref.child("isCanSendMessage").get()
+    print(is_can_send_message)
+    if is_can_send_message:
+        return True
+    else:
+        return False
+
 
 
 json_path = './util/seckey.json'

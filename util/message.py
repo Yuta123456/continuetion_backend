@@ -14,3 +14,12 @@ def get_no_reply_message():
 
 def get_set_complete_message(contents):
     return contents + "で継続内容をセットしました。"
+
+def get_stop_send_message():
+    message = "毎日継続したかどうか聞くのを辞めます🥲"
+    return message
+
+
+def get_restart_send_message():
+    message = "毎日継続したかどうか聞きます！🥰"
+    return message

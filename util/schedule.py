@@ -5,6 +5,7 @@ from linebot.models import FlexSendMessage
 import os
 import sys
 from constants.LINE_BOT import LINE_BOT_CHANNEL_TOKEN
+from util.firebase import is_can_send_message_for_user
 sys.path.append(os.getcwd())
 
 from messages.question import question
@@ -17,4 +18,7 @@ message = FlexSendMessage(
     contents=question
 )
 
-line_bot_api.broadcast(message)
+user_ids = line_bot_api.get_followers_ids().user_ids
+for user_id in user_ids:
+    if is_can_send_message_for_user(user_id):
+        line_bot_api.push_message(user_id, message)

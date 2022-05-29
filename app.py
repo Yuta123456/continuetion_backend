@@ -64,7 +64,7 @@ def handle_message(event):
             message = TextSendMessage(text="今日の入力は終了しています！")
     elif event.message.text == "Record":
         message = FlexSendMessage(
-            alt_text='hello',
+            alt_text='今日はいかがでしたか？',
             contents=question
         )
     elif event.message.text == "No":
@@ -77,11 +77,11 @@ def handle_message(event):
         set_contents = set_continuation_contents(userId, event.message.text)
         message = TextMessage(text=get_set_complete_message(set_contents))
     elif event.message.text == "stop":
-        stop_send_message(userId)
-        print("TODO: ")
+        message = stop_send_message(userId)
+        message = TextMessage(text=message)
     elif event.message.text == "restart":
-        restart_send_message(userId)
-        print("TODO: ")
+        message = restart_send_message(userId)
+        message = TextMessage(text=message)
     else:
         message = TextSendMessage(text=get_no_reply_message())
     line_bot_api.reply_message(

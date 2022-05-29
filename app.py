@@ -73,7 +73,7 @@ def handle_message(event):
         message = TextSendMessage(text=show_data(userId))
     elif event.message.text == "Fruits":
         message = TextSendMessage(text=get_fruits())
-    elif event.message.text.startsWith("set:"):
+    elif event.message.text.startswith("set:"):
         set_contents = set_continuation_contents(userId, event.message.text)
         message = TextMessage(text=get_set_complete_message(set_contents))
     else:

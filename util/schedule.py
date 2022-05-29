@@ -1,10 +1,7 @@
-
 from linebot import (
     LineBotApi
 )
-from linebot.models import (
-    TextSendMessage, FlexSendMessage
-)
+from linebot.models import FlexSendMessage
 import os
 import sys
 from constants.LINE_BOT import LINE_BOT_CHANNEL_TOKEN

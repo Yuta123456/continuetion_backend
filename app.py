@@ -23,7 +23,7 @@ handler = WebhookHandler(LINE_BOT_CHANNEL_SECRET)
 
 @app.route("/", methods=['GET'])
 def test():
-    return 'test_v2'
+    return 'test_v3'
 
 
 @app.route("/callback", methods=['POST'])

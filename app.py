@@ -11,7 +11,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 )
 from messages.question import question
-from util.firebase import exist_today_data, post_firebase, set_continuation_contents, show_data
+from util.firebase import exist_today_data, post_firebase, restart_send_message, set_continuation_contents, show_data, stop_send_message
 from util.message import get_fruits, get_no_reply_message, get_set_complete_message
 from constants.LINE_BOT import LINE_BOT_CHANNEL_SECRET, LINE_BOT_CHANNEL_TOKEN
 app = Flask(__name__)
@@ -76,6 +76,12 @@ def handle_message(event):
     elif event.message.text.startswith("set:"):
         set_contents = set_continuation_contents(userId, event.message.text)
         message = TextMessage(text=get_set_complete_message(set_contents))
+    elif event.message.text == "stop":
+        stop_send_message(userId)
+        print("TODO: ")
+    elif event.message.text == "restart":
+        restart_send_message(userId)
+        print("TODO: ")
     else:
         message = TextSendMessage(text=get_no_reply_message())
     line_bot_api.reply_message(

@@ -42,6 +42,16 @@ def set_continuation_contents(userId, message):
     })
     return contents
 
+def stop_send_message(userId):
+    message = "hey"
+    return message
+
+
+def restart_send_message(userId):
+    message = "hey"
+    return message
+
+
 json_path = './util/seckey.json'
 if not os.path.exists(json_path):
     config = {

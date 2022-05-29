@@ -35,7 +35,7 @@ def show_data(userId):
 
 def set_continuation_contents(userId, message): 
     # format set:{}
-    contents = re.findall("set:(.*)", message)
+    contents = re.findall("set:(.*)", message)[0]
     users_ref = db.reference('/users').child(userId)
     users_ref.update({
         "contents": contents

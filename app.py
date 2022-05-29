@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, request, abort
+from flask import Flask, request, abort, jsonify
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -11,7 +11,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 )
 from messages.question import question
-from util.firebase import exist_today_data, post_firebase, restart_send_message, set_continuation_contents, show_data, stop_send_message
+from util.firebase import exist_today_data, get_user_data, post_firebase, restart_send_message, set_continuation_contents, show_data, stop_send_message
 from util.message import get_fruits, get_no_reply_message, get_set_complete_message
 from constants.LINE_BOT import LINE_BOT_CHANNEL_SECRET, LINE_BOT_CHANNEL_TOKEN
 app = Flask(__name__)
@@ -44,6 +44,12 @@ def callback():
         abort(400)
 
     return 'OK'
+@app.route("/userdata", methods=['GET'])
+def user_data():
+    request_data = request.args.to_dict()
+    userId = request_data['userId']
+    response = jsonify(get_user_data(userId))
+    return response
 
 
 @handler.add(MessageEvent, message=TextMessage)

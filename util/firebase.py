@@ -23,6 +23,11 @@ def post_firebase(userId, day):
         day: True
     })
 
+def get_user_data(userId):
+    users_ref = db.reference('/users').child(userId).child('continuetion').get()
+    users_ref = dict(users_ref)
+    return users_ref
+
 
 def show_data(userId):
     message = "直近一週間の結果\n"

@@ -1,4 +1,5 @@
 import json
+import re
 import firebase_admin
 from firebase_admin import db
 from firebase_admin import credentials
@@ -31,6 +32,15 @@ def show_data(userId):
         day = key[6:]
         string += "\n{0}年{1}月{2}日 : {3}".format(year, month, day, "✅" if val else "❌")
     return string
+
+def set_continuation_contents(userId, message): 
+    # format set:{}
+    contents = re.findall("set:(.*)", message)
+    users_ref = db.reference('/users').child(userId)
+    users_ref.update({
+        "contents": contents
+    })
+    return contents
 
 json_path = './util/seckey.json'
 if not os.path.exists(json_path):

@@ -1,4 +1,5 @@
-from flask import Flask, request, abort, Response
+import datetime
+from flask import Flask, request, abort
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -9,11 +10,9 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 )
-import requests
-import datetime
 from messages.question import question
-from util.firebase import exist_today_data, post_firebase, show_data
-from util.message import get_fruits, get_no_reply_message
+from util.firebase import exist_today_data, post_firebase, set_continuation_contents, show_data
+from util.message import get_fruits, get_no_reply_message, get_set_complete_message
 from constants.LINE_BOT import LINE_BOT_CHANNEL_SECRET, LINE_BOT_CHANNEL_TOKEN
 app = Flask(__name__)
 
@@ -56,24 +55,27 @@ def handle_message(event):
     now = datetime.datetime.utcnow() + \
         datetime.timedelta(hours=DIFF_JST_FROM_UTC)
     today = now.strftime('%Y%m%d')
-    if (event.message.text == "Yes"):
+    if event.message.text == "Yes":
         # 既に今日入力しているかどうか判定する
         if not exist_today_data(userId, today):
             message = TextSendMessage(text="すごい！偉いね✨")
             post_firebase(userId, today)
         else:
             message = TextSendMessage(text="今日の入力は終了しています！")
-    elif (event.message.text == "Record"):
+    elif event.message.text == "Record":
         message = FlexSendMessage(
             alt_text='hello',
             contents=question
         )
-    elif (event.message.text == "No"):
+    elif event.message.text == "No":
         message = TextSendMessage(text="🏳‍🌈明日は頑張ろう🏳‍🌈")
-    elif (event.message.text == "Show"):
+    elif event.message.text == "Show":
         message = TextSendMessage(text=show_data(userId))
-    elif (event.message.text == "Fruits"):
+    elif event.message.text == "Fruits":
         message = TextSendMessage(text=get_fruits())
+    elif event.message.text.startsWith("set:"):
+        set_contents = set_continuation_contents(userId, event.message.text)
+        message = TextMessage(text=get_set_complete_message(set_contents))
     else:
         message = TextSendMessage(text=get_no_reply_message())
     line_bot_api.reply_message(

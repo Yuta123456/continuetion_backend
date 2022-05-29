@@ -5,8 +5,6 @@ from firebase_admin import db
 from firebase_admin import credentials
 import os
 
-from sqlalchemy import false
-
 from util.message import get_restart_send_message, get_stop_send_message
 
 

@@ -10,6 +10,8 @@ def get_no_reply_message():
     no_reply_message += "\nRecord: 記録を取るためのメッセージを送ります"
     no_reply_message += "\nFruits: ランダムなフルーツを送ります"
     no_reply_message += "\nset:継続内容: 継続内容をセットします"
+    no_reply_message += "\nstop: 毎日聞くのを止めます"
+    no_reply_message += "\nrestart: 毎日聞くのを再開します"
     return no_reply_message
 
 def get_set_complete_message(contents):

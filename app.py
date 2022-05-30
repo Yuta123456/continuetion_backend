@@ -18,7 +18,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # 本番環境を追加
-CORS(app, origins=["https://example.com", "http://localhost:8100"])
+CORS(app, origins=["https://musical-lamington-39fe95.netlify.app", "http://localhost:8100"])
 line_bot_api = LineBotApi(
     LINE_BOT_CHANNEL_TOKEN)
 handler = WebhookHandler(LINE_BOT_CHANNEL_SECRET)
@@ -47,6 +47,8 @@ def callback():
         abort(400)
 
     return 'OK'
+
+
 @app.route("/userdata", methods=['GET'])
 def user_data():
     request_data = request.args.to_dict()

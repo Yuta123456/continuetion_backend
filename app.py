@@ -69,7 +69,7 @@ def handle_message(event):
     if event.message.text == "Yes":
         # 既に今日入力しているかどうか判定する
         if not exist_today_data(userId, today):
-            message = TextSendMessage(text="すごい！偉いね✨\nhttps://musical-lamington-39fe95.netlify.appで確認もできるよ！")
+            message = TextSendMessage(text="すごい！偉いね✨\n https://musical-lamington-39fe95.netlify.app で確認もできるよ！")
             post_firebase(userId, today)
         else:
             message = TextSendMessage(text="今日の入力は終了しています！")

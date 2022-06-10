@@ -11,7 +11,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 )
 from messages.question import question
-from util.firebase import exist_today_data, get_user_data, post_firebase, restart_send_message, set_continuation_contents, show_data, stop_send_message
+from util.firebase import exist_today_data, get_contribute_count, get_user_data, post_firebase, restart_send_message, set_continuation_contents, show_data, stop_send_message
 from util.message import get_fruits, get_no_reply_message, get_set_complete_message
 from constants.LINE_BOT import LINE_BOT_CHANNEL_SECRET, LINE_BOT_CHANNEL_TOKEN
 from flask_cors import CORS
@@ -56,6 +56,12 @@ def user_data():
     response = jsonify(get_user_data(userId))
     return response
 
+@app.route("/contributecount", methods=['GET'])
+def contribute_count():
+    request_data = request.args.to_dict()
+    userId = request_data['userId']
+    response = jsonify(get_contribute_count(userId))
+    return response
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):

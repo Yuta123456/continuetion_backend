@@ -5,6 +5,7 @@ import firebase_admin
 from firebase_admin import db
 from firebase_admin import credentials
 import os
+from util.achives import check_achives
 
 from util.message import get_restart_send_message, get_stop_send_message
 
@@ -28,6 +29,17 @@ def get_user_data(userId):
     users_ref = dict(users_ref)
     return users_ref
 
+def get_contribute_count(userId):
+    user_ref = db.reference('/users').child(userId)
+    users_contribute = user_ref.child('continuetion').get()
+    # print(len(list(users_contribute)))
+    achives = user_ref.child("achives").get() and {}
+    achives = check_achives(achives, users_contribute)
+    user_ref.update({
+        "achives": achives
+    })
+
+    return len(list(users_contribute))
 
 def show_data(userId):
     message = "直近一週間の結果\n"

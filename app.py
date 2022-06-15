@@ -11,14 +11,15 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 )
 from messages.question import question
-from util.firebase import exist_today_data, get_contribute_count, get_user_data, post_firebase, restart_send_message, set_continuation_contents, show_data, stop_send_message
+from util.firebase import exist_today_data, get_contribute_count, get_user_data, post_firebase, restart_send_message, set_continuation_contents, setting_data, show_data, stop_send_message
 from util.message import get_fruits, get_no_reply_message, get_set_complete_message
 from constants.LINE_BOT import LINE_BOT_CHANNEL_SECRET, LINE_BOT_CHANNEL_TOKEN
 from flask_cors import CORS
 
 app = Flask(__name__)
 # 本番環境を追加
-CORS(app, origins=["https://musical-lamington-39fe95.netlify.app", "http://localhost:8100"])
+CORS(app, origins=[
+     "https://continuationapp.netlify.app", "http://localhost:8100"])
 line_bot_api = LineBotApi(
     LINE_BOT_CHANNEL_TOKEN)
 handler = WebhookHandler(LINE_BOT_CHANNEL_SECRET)
@@ -56,12 +57,23 @@ def user_data():
     response = jsonify(get_user_data(userId))
     return response
 
+
+@app.route("/setting", methods=['POST'])
+def setting():
+    if request.headers['Content-Type'] != 'application/json':
+        print(request.headers['Content-Type'])
+        return jsonify(res='error'), 400
+    setting_data(request.json)
+    return (jsonify(res="success"),  200)
+
+
 @app.route("/contributecount", methods=['GET'])
 def contribute_count():
     request_data = request.args.to_dict()
     userId = request_data['userId']
     response = jsonify(get_contribute_count(userId))
     return response
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -75,7 +87,8 @@ def handle_message(event):
     if event.message.text == "Yes":
         # 既に今日入力しているかどうか判定する
         if not exist_today_data(userId, today):
-            message = TextSendMessage(text="すごい！偉いね✨\n https://musical-lamington-39fe95.netlify.app で確認もできるよ！")
+            message = TextSendMessage(
+                text="すごい！偉いね✨\n https://musical-lamington-39fe95.netlify.app で確認もできるよ！")
             post_firebase(userId, today)
         else:
             message = TextSendMessage(text="今日の入力は終了しています！")

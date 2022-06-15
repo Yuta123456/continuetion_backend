@@ -24,10 +24,12 @@ def post_firebase(userId, day):
         day: True
     })
 
+
 def get_user_data(userId):
-    users_ref = db.reference('/users').child(userId).child('continuetion').get()
+    users_ref = db.reference('/users').child(userId).get()
     users_ref = dict(users_ref)
     return users_ref
+
 
 def get_contribute_count(userId):
     user_ref = db.reference('/users').child(userId)
@@ -40,6 +42,7 @@ def get_contribute_count(userId):
     })
 
     return len(list(users_contribute))
+
 
 def show_data(userId):
     message = "直近一週間の結果\n"
@@ -56,7 +59,21 @@ def show_data(userId):
         message += "\n"
     return message
 
-def set_continuation_contents(userId, message): 
+
+def setting_data(setting_request):
+    userId = setting_request['userId']
+    content = setting_request['content']
+    notice_time = setting_request['noticeTime']
+    user_ref = db.reference('/users').child(userId)
+    user_ref.update({
+        "contents": content
+    })
+    user_ref.update({
+        "noticeTime": notice_time
+    })
+
+
+def set_continuation_contents(userId, message):
     # format set:{}
     contents = re.findall("set:(.*)", message)[0]
     users_ref = db.reference('/users').child(userId)
@@ -64,6 +81,7 @@ def set_continuation_contents(userId, message):
         "contents": contents
     })
     return contents
+
 
 def get_continuation_contents(userId):
     users_ref = db.reference('/users').child(userId)
@@ -87,6 +105,7 @@ def restart_send_message(userId):
     })
     message = get_restart_send_message()
     return message
+
 
 def is_can_send_message_for_user(user_id):
     users_ref = db.reference('/users').child(user_id)

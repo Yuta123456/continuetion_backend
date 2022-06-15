@@ -107,7 +107,7 @@ def restart_send_message(userId):
     return message
 
 
-def is_can_send_message_for_user(user_id):
+def needs_notice_for_user(user_id):
     users_ref = db.reference('/users').child(user_id)
     is_can_send_message = users_ref.child("isCanSendMessage").get()
     print(is_can_send_message)
@@ -115,6 +115,13 @@ def is_can_send_message_for_user(user_id):
         return True
     else:
         return False
+
+
+def get_user_notice_time(user_id):
+    user_ref = db.reference('/users').child(user_id)
+    notice_time = user_ref.child("noticeTime").get()
+    notice_time = notice_time.split(":")[0]
+    return int(notice_time)
 
 
 def get_ids_of_all_line_user():

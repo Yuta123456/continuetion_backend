@@ -1,3 +1,5 @@
+import datetime
+from messages.question import question
 from linebot import (
     LineBotApi
 )
@@ -5,10 +7,9 @@ from linebot.models import FlexSendMessage
 import os
 import sys
 from constants.LINE_BOT import LINE_BOT_CHANNEL_TOKEN
-from util.firebase import get_ids_of_all_line_user, is_can_send_message_for_user
+from util.firebase import get_ids_of_all_line_user, get_user_notice_time
 sys.path.append(os.getcwd())
 
-from messages.question import question
 
 line_bot_api = LineBotApi(
     LINE_BOT_CHANNEL_TOKEN)
@@ -18,7 +19,11 @@ message = FlexSendMessage(
     contents=question
 )
 
+dt_now = datetime.datetime.now()
+hour = dt_now.hour
 user_ids = get_ids_of_all_line_user()
 for user_id in user_ids:
-    if is_can_send_message_for_user(user_id):
+    needs_notice_for_user = needs_notice_for_user(user_id)
+    is_user_notice_time = get_user_notice_time(user_id) == hour
+    if needs_notice_for_user and is_user_notice_time:
         line_bot_api.push_message(user_id, message)

@@ -1,8 +1,9 @@
 import os
 line_key_path = './constants/seckey.txt'
+print(os.path.exists(line_key_path))
 if os.path.exists(line_key_path):
     with open(line_key_path, mode='r') as f:
-        key = [s for s in f.readlines()]
+        key = [s.strip() for s in f.readlines()]
         LINE_BOT_CHANNEL_SECRET = key[0]
         LINE_BOT_CHANNEL_TOKEN  = key[1]
 else:

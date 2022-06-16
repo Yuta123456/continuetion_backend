@@ -25,5 +25,6 @@ user_ids = get_ids_of_all_line_user()
 for user_id in user_ids:
     needs_notice = needs_notice_for_user(user_id)
     is_user_notice_time = get_user_notice_time(user_id) == hour
+    print(is_user_notice_time, hour, get_user_notice_time(user_id))
     if needs_notice_for_user and is_user_notice_time:
         line_bot_api.push_message(user_id, message)
